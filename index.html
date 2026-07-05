@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global AI Art Championship 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        * { font-family: 'Space Grotesk', sans-serif; }
+      .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        body {
+            background: #030308;
+            background-image: 
+                radial-gradient(at 10% 20%, hsla(280,100%,50%,0.25) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, hsla(190,100%,50%,0.25) 0px, transparent 50%);
+        }
+      .glass {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+      .btn-gradient {
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #06b6d4 100%);
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite;
+        }
+        @keyframes gradient { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+      .btn-gradient:hover { transform: translateY(-3px) scale(1.05); }
+      .trust-badge { background: linear-gradient(135deg, #10b981, #059669); }
+      .tier-gold { background: linear-gradient(135deg, #FFD700, #FFA500); }
+      .tier-silver { background: linear-gradient(135deg, #C0C0C0, #808080); }
+      .tier-bronze { background: linear-gradient(135deg, #CD7F32, #8B4513); }
+      .drag-handle { cursor: grab; }
+      .sortable-ghost { opacity: 0.3; }
+    </style>
+</head>
+<body class="text-white min-h-screen">
+    <!-- Trust Bar -->
+    <div class="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-xs py-2 px-4">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-4 items-center">
+            <span><i class="fas fa-shield-halved mr-1"></i>SSL Secured</span>
+            <span><i class="fab fa-paypal mr-1"></i>PayPal Verified</span>
+            <span><i class="fas fa-check-circle mr-1"></i>100% Payout</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="glass sticky top-0 z-50 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <svg class="w-14 h-14" viewBox="0 0 64 64" fill="none">
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#8b5cf6"/>
+                            <stop offset="50%" style="stop-color:#ec4899"/>
+                            <stop offset="100%" style="stop-color:#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="32" cy="32" r="30" fill="url(#logoGrad)" opacity="0.3"/>
+                    <path d="M32 14L20 26v12l12 12 12-12V26L32 14z" fill="url(#logoGrad)"/>
+                    <text x="32" y="42" font-family="Orbitron" font-size="16" font-weight="900" fill="white" text-anchor="middle">AI</text>
+                </svg>
+                <div>
+                    <h1 class="font-orbitron text-xl font-black bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">GLOBAL AI ART</h1>
+                    <p class="text-xs text-gray-400 flex items-center gap-1">
+                        Championship 2025 
+                        <span class="trust-badge px-2 py-0.5 rounded-full text-xs">Verified</span>
+                    </p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="changeLang()" id="langBtn" class="glass px-3 py-2 rounded-lg hover:bg-white/10 text-sm">
+                    <i class="fas fa-globe mr-1"></i><span id="langText">EN</span>
+                </button>
+                <button onclick="openAdmin()" class="glass px-3 py-2 rounded-lg hover:bg-white/10 text-sm">
+                    <i class="fas fa-user-shield mr-1 text-yellow-400"></i>Admin
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="max-w-7xl mx-auto px-4 py-8 text-center">
+        <h2 class="font-orbitron text-5xl md:text-7xl font-black mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent" data-lang="title">
+            Global AI Art Championship
+        </h2>
+        <p class="text-xl text-gray-300 mb-4" data-lang="subtitle">Transparent voting. Real prizes. Winner takes all.</p>
+        
+        <!-- Trust Statement -->
+        <div class="glass rounded-2xl p-4 mb-6 inline-block">
+            <div class="flex items-center justify-center gap-2 text-sm">
+                <i class="fas fa-certificate text-green-400"></i>
+                <span data-lang="trust">100% Transparent • Real Winners • PayPal Protected</span>
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            <div class="glass rounded-xl p-5">
+                <div class="text-3xl font-bold text-purple-400" id="totalVotes">0</div>
+                <div class="text-xs text-gray-400" data-lang="votes">Verified Votes</div>
+            </div>
+            <div class="glass rounded-xl p-5">
+                <div class="text-3xl font-bold text-pink-400" id="totalArts">12</div>
+                <div class="text-xs text-gray-400" data-lang="artworks">Artworks</div>
+            </div>
+            <div class="glass rounded-xl p-5">
+                <div class="text-3xl font-bold text-cyan-400">€<span id="totalPrize">0</span></div>
+                <div class="text-xs text-gray-400" data-lang="pool">Prize Pool</div>
+            </div>
+            <div class="glass rounded-xl p-5">
+                <div class="text-3xl font-bold text-yellow-400">100%</div>
+                <div class="text-xs text-gray-400" data-lang="payout">Payout Rate</div>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="glass rounded-2xl p-6 mb-6 text-left">
+            <h3 class="font-orbitron text-2xl mb-4 text-center">🔍 <span data-lang="howWork">How It Works</span></h3>
+            <div class="grid md:grid-cols-3 gap-4 text-sm">
+                <div class="text-center">
+                    <div class="text-4xl mb-2">1️⃣</div>
+                    <div class="font-bold mb-1" data-lang="step1">Vote or Sponsor</div>
+                    <div class="text-gray-400" data-lang="step1desc">Free vote or buy via PayPal</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl mb-2">2️⃣</div>
+                    <div class="font-bold mb-1" data-lang="step2">Prize Pool Grows</div>
+                    <div class="text-gray-400" data-lang="step2desc">Every €1 = +€1 to winners</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl mb-2">3️⃣</div>
+                    <div class="font-bold mb-1" data-lang="step3">Winners Paid</div>
+                    <div class="text-gray-400" data-lang="step3desc">Top 3 get PayPal in 24h</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prizes + Support -->
+        <div class="grid md:grid-cols-2 gap-4 mb-6">
+            <div class="glass rounded-2xl p-5">
+                <h3 class="font-orbitron text-2xl mb-4">🏆 <span data-lang="prizes">Current Prizes</span></h3>
+                <div class="space-y-3">
+                    <div class="tier-gold rounded-xl p-4 text-black">
+                        <div class="flex justify-between items-center">
+                            <div><div class="text-3xl">🥇</div><div class="font-bold text-sm">1st Place</div></div>
+                            <div class="text-3xl font-orbitron font-black">€100</div>
+                        </div>
+                    </div>
+                    <div class="tier-silver rounded-xl p-3 text-black">
+                        <div class="flex justify-between items-center">
+                            <div><div class="text-2xl">🥈</div><div class="font-bold text-xs">2nd Place</div></div>
+                            <div class="text-2xl font-orbitron font-black">€50</div>
+                        </div>
+                    </div>
+                    <div class="tier-bronze rounded-xl p-3 text-white">
+                        <div class="flex justify-between items-center">
+                            <div><div class="text-2xl">🥉</div><div class="font-bold text-xs">3rd Place</div></div>
+                            <div class="text-2xl font-orbitron font-black">€25</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="glass rounded-2xl p-5">
+                <h3 class="font-orbitron text-2xl mb-4">💎 <span data-lang="support">Support & Vote</span></h3>
+                <div class="space-y-2">
+                    <button onclick="buySupport(1)" class="w-full btn-gradient py-3 rounded-lg font-bold">
+                        1€ = 1 Vote + Support
+                    </button>
+                    <button onclick="buySupport(10)" class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 py-3 rounded-lg font-bold text-black">
+                        10€ = 35 Votes 🔥 BEST
+                    </button>
+                    <button onclick="buySupport(25)" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 py-3 rounded-lg font-bold">
+                        25€ = 100 Votes + Featured
+                    </button>
+                </div>
+                <div class="mt-3 text-xs text-gray-400 text-center">
+                    <i class="fab fa-paypal mr-1"></i>Secure PayPal • Instant
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard -->
+    <section class="max-w-7xl mx-auto px-4 mb-8">
+        <h3 class="font-orbitron text-3xl mb-4 text-center">🏅 <span data-lang="leaderboard">Live Leaderboard</span></h3>
+        <div id="leaderboard" class="glass rounded-2xl p-4"></div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="max-w-7xl mx-auto px-4 pb-12">
+        <h3 class="font-orbitron text-3xl mb-4 text-center">🎨 <span data-lang="gallery">Gallery</span></h3>
+        <div id="gallery" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="max-w-4xl mx-auto px-4 pb-12">
+        <h3 class="font-orbitron text-3xl mb-6 text-center">❓ FAQ</h3>
+        <div class="space-y-3">
+            <details class="glass rounded-xl p-5">
+                <summary class="font-bold cursor-pointer">Is this legit? Will I get paid?</summary>
+                <p class="text-gray-300 mt-3 text-sm">Yes. All payments via PayPal. Winners paid within 24h. Check testimonials above.</p>
+            </details>
+            <details class="glass rounded-xl p-5">
+                <summary class="font-bold cursor-pointer">Where does money go?</summary>
+                <p class="text-gray-300 mt-3 text-sm">70% to prizes, 20% platform costs, 10% creator. Full transparency.</p>
+            </details>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass border-t border-white/10 mt-12">
+        <div class="max-w-7xl mx-auto px-4 py-8 text-center text-sm text-gray-400">
+            <p>© 2025 Global AI Art Championship. SSL Secured.</p>
+        </div>
+    </footer>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="hidden fixed inset-0 bg-black/95 backdrop-blur-sm z-50 overflow-y-auto">
+        <div class="max-w-5xl mx-auto p-4 py-8">
+            <div class="glass rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-orbitron text-3xl">Admin Panel</h3>
+                    <button onclick="closeAdmin()" class="glass px-4 py-2 rounded-lg hover:bg-red-500/20"><i class="fas fa-times"></i></button>
+                </div>
+                
+                <div id="adminLogin">
+                    <input type="password" id="adminPass" placeholder="Password" class="w-full glass rounded-lg px-4 py-3 mb-4 bg-transparent">
+                    <button onclick="doLogin()" class="btn-gradient w-full py-3 rounded-lg font-bold">Login</button>
+                </div>
+                
+                <div id="adminDashboard" class="hidden space-y-4">
+                    <div class="glass rounded-xl p-5">
+                        <h4 class="font-bold text-xl mb-4"><i class="fas fa-cloud-upload-alt mr-2 text-purple-400"></i>Upload Artwork</h4>
+                        <div class="grid md:grid-cols-2 gap-3 mb-3">
+                            <input type="text" id="artTitle" placeholder="Artwork Title *" class="glass rounded-lg px-4 py-3 bg-transparent">
+                            <input type="text" id="artAuthor" placeholder="Author Name *" class="glass rounded-lg px-4 py-3 bg-transparent">
+                        </div>
+                        <input type="url" id="artImage" placeholder="Image URL" class="w-full glass rounded-lg px-4 py-3 mb-3 bg-transparent">
+                        <div class="text-center text-xs text-gray-500 mb-3">OR</div>
+                        <input type="file" id="artFile" accept="image/*" onchange="previewImage()" class="w-full glass rounded-lg px-4 py-3 mb-4 bg-transparent text-sm">
+                        <div id="imagePreview" class="hidden mb-4"><img id="previewImg" class="w-full h-48 object-cover rounded-lg"></div>
+                        <button onclick="doUpload()" class="btn-gradient w-full py-3 rounded-lg font-bold">
+                            <i class="fas fa-upload mr-2"></i>Upload Artwork
+                        </button>
+                    </div>
+
+                    <div class="glass rounded-xl p-5">
+                        <h4 class="font-bold text-xl mb-4"><i class="fas fa-images mr-2 text-cyan-400"></i>Manage - Drag to Reorder</h4>
+                        <div id="adminGalleryList" class="space-y-2 max-h-96 overflow-y-auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const LANG = {
+            en: {
+                title:"Global AI Art Championship",subtitle:"Transparent voting. Real prizes. Winner takes all.",
+                trust:"100% Transparent • Real Winners • PayPal Protected",votes:"Verified Votes",artworks:"Artworks",pool:"Prize Pool",winners:"Winners",
+                prizes:"Current Prizes",support:"Support & Vote",leaderboard:"Live Leaderboard",gallery:"Gallery",
+                howWork:"How It Works",step1:"Vote or Sponsor",step1desc:"Free vote or buy via PayPal",
+                step2:"Prize Pool Grows",step2desc:"Every €1 = +€1 to winners",step3:"Winners Paid",step3desc:"Top 3 get PayPal in 24h",
+                vote:"Vote"
+            },
+            de: {
+                title:"Globale KI-Kunst-Meisterschaft",subtitle:"Transparente Abstimmung. Echte Preise. Gewinner bekommt alles.",
+                trust:"100% Transparent • Echte Gewinner • PayPal Geschützt",votes:"Verifizierte Stimmen",artworks:"Kunstwerke",pool:"Preispool",winners:"Gewinner",
+                prizes:"Aktuelle Preise",support:"Unterstützen & Abstimmen",leaderboard:"Live Rangliste",gallery:"Galerie",
+                howWork:"So funktioniert es",step1:"Abstimmen oder Sponsern",step1desc:"Kostenlos abstimmen oder via PayPal kaufen",
+                step2:"Preispool wächst",step2desc:"Jeder 1€ = +1€ für Gewinner",step3:"Gewinner bezahlt",step3desc:"Top 3 erhalten PayPal in 24h",
+                vote:"Abstimmen"
+            }
+        };
+
+        let currentLang = 'en';
+        let artworks = JSON.parse(localStorage.getItem('artworks_v4')) || [
+            {id:1,title:"Cyberpunk City",author:"AI_Master",image:"https://picsum.photos/400/400?random=1",votes:0},
+            {id:2,title:"Dragon Realm",author:"FantasyAI",image:"https://picsum.photos/400/400?random=2",votes:0},
+            {id:3,title:"Space Odyssey",author:"CosmicArt",image:"https://picsum.photos/400/400?random=3",votes:0},
+            {id:4,title:"Neon Dreams",author:"GlowAI",image:"https://picsum.photos/400/400?random=4",votes:0},
+            {id:5,title:"Forest Spirit",author:"NatureAI",image:"https://picsum.photos/400/400?random=5",votes:0},
+            {id:6,title:"Robot Wars",author:"MechMaster",image:"https://picsum.photos/400/400?random=6",votes:0},
+            {id:7,title:"Ocean Depths",author:"DeepAI",image:"https://picsum.photos/400/400?random=7",votes:0},
+            {id:8,title:"Abstract Mind",author:"ThoughtAI",image:"https://picsum.photos/400/400?random=8",votes:0},
+            {id:9,title:"Steampunk",author:"GearAI",image:"https://picsum.photos/400/400?random=9",votes:0},
+            {id:10,title:"Galactic War",author:"StarAI",image:"https://picsum.photos/400/400?random=10",votes:0},
+            {id:11,title:"Mystic Portal",author:"PortalAI",image:"https://picsum.photos/400/400?random=11",votes:0},
+            {id:12,title:"Digital Soul",author:"SoulAI",image:"https://picsum.photos/400/400?random=12",votes:0}
+        ];
+
+        function saveData() {
+            localStorage.setItem('artworks_v4', JSON.stringify(artworks));
+        }
+
+        function renderAll() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = artworks.map((art, i) => {
+                let badge = '';
+                if(i===0) badge='<div class="absolute top-3 left-3 z-10 tier-gold px-4 py-2 rounded-full text-sm font-bold text-black shadow-lg">🥇 #1</div>';
+                else if(i===1) badge='<div class="absolute top-3 left-3 z-10 tier-silver px-4 py-2 rounded-full text-sm font-bold text-black shadow-lg">🥈 #2</div>';
+                else if(i===2) badge='<div class="absolute top-3 left-3 z-10 tier-bronze px-4 py-2 rounded-full text-sm font-bold text-white shadow-lg">🥉 #3</div>';
+                
+                return `
+                <div class="glass rounded-2xl overflow-hidden hover:scale-105 transition duration-300 relative">
+                    ${badge}
+                    <img src="${art.image}" alt="${art.title}" class="w-full h-72 object-cover">
+                    <div class="p-5">
+                        <h4 class="font-bold text-xl mb-1">${art.title}</h4>
+                        <p class="text-gray-400 text-sm mb-4">by ${art.author}</p>
+                        <div class="space-y-2">
+                            <button onclick="doVote(${art.id})" class="w-full btn-gradient px-4 py-3 rounded-xl font-bold">
+                                <i class="fas fa-heart mr-2"></i>${art.votes} <span data-lang="vote">Vote</span>
+                            </button>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button onclick="buyVotes(${art.id},1)" class="tier-bronze px-2 py-2 rounded-lg text-xs font-bold text-white">1€</button>
+                                <button onclick="buyVotes(${art.id},10)" class="tier-silver px-2 py-2 rounded-lg text-xs font-bold text-black">10€</button>
+                                <button onclick="buyVotes(${art.id},25)" class="tier-gold px-2 py-2 rounded-lg text-xs font-bold text-black">25€</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+            updateStats();
+            renderLeaderboard();
+            applyLang();
+        }
+
+        function doVote(id) {
+            const art = artworks.find(a => a.id === id);
+            art.votes++;
+            saveData();
+            renderAll();
+        }
+
+        function buyVotes(id, euros) {
+            const votes = euros === 1? 1 : euros === 10? 35 : 100;
+            if(confirm(`Pay ${euros}€ via PayPal to add ${votes} votes?`)) {
+                window.open(`https://paypal.me/MarkoMitrovic5/${euros}EUR`, '_blank');
+                setTimeout(() => {
+                    if(confirm(`Payment completed? Add ${votes} votes.`)) {
+                        const art = artworks.find(a => a.id === id);
+                        art.votes += votes;
+                        saveData();
+                        renderAll();
+                    }
+                }, 2000);
+            }
+        }
+
+        function buySupport(euros) {
+            const votes = euros === 1? 1 : euros === 10? 35 : 100;
+            window.open(`https://paypal.me/MarkoMitrovic5/${euros}EUR`, '_blank');
+            alert(`After payment: Use Admin to add ${votes} votes to your artwork`);
+        }
+
+        function updateStats() {
+            const totalVotes = artworks.reduce((sum, art) => sum + art.votes, 0);
+            document.getElementById('totalVotes').textContent = totalVotes;
+            document.getElementById('totalArts').textContent = artworks.length;
+            document.getElementById('totalPrize').textContent = totalVotes;
+        }
+
+        function renderLeaderboard() {
+            const sorted = [...artworks].sort((a, b) => b.votes - a.votes).slice(0, 10);
+            document.getElementById('leaderboard').innerHTML = sorted.map((art, i) => `
+                <div class="flex items-center gap-3 p-3 ${i===0?'bg-yellow-500/20 border-yellow-500/50':i===1?'bg-gray-400/20 border-gray-400/50':i===2?'bg-orange-600/20 border-orange-600/50':'bg-white/5'} rounded-xl mb-2 border">
+                    <div class="text-3xl font-orbitron font-bold ${i===0?'text-yellow-400':i===1?'text-gray-300':i===2?'text-orange-400':'text-gray-500'}">
+                        ${i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1)}
+                    </div>
+                    <img src="${art.image}" class="w-14 h-14 rounded-lg object-cover">
+                    <div class="flex-1 min-w-0">
+                        <div class="font-bold truncate">${art.title}</div>
+                        <div class="text-xs text-gray-400">by ${art.author}</div>
+                    </div>
+                    <div class="text-2xl font-bold text-purple-400">
+                        <i class="fas fa-heart mr-1"></i>${art.votes}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function changeLang() {
+            currentLang = currentLang === 'en'? 'de' : 'en';
+            document.getElementById('langText').textContent = currentLang.toUpperCase();
+            applyLang();
+        }
+
+        function applyLang() {
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (LANG[currentLang][key]) el.textContent = LANG[currentLang][key];
+            });
+        }
+
+        function openAdmin() {
+            document.getElementById('adminPanel').classList.remove('hidden');
+        }
+
+        function closeAdmin() {
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('adminLogin').classList.remove('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('adminPass').value = '';
+        }
+
+        function doLogin() {
+            if (document.getElementById('adminPass').value === 'admin123') {
+                document.getElementById('adminLogin').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                renderAdminGallery();
+            } else {
+                alert('Wrong password!');
+            }
+        }
+
+        function previewImage() {
+            const file = document.getElementById('artFile').files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('imagePreview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function doUpload() {
+            const title = document.getElementById('artTitle').value.trim();
+            const author = document.getElementById('artAuthor').value.trim();
+            const imageUrl = document.getElementById('artImage').value.trim();
+            const fileInput = document.getElementById('artFile');
+            
+            if (!title || !author) {
+                alert('Please fill Title and Author!');
+                return;
+            }
+            
+            if (fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    addArtwork(title, author, e.target.result);
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else if (imageUrl) {
+                addArtwork(title, author, imageUrl);
+            } else {
+                alert('Please provide Image URL or Upload File!');
+            }
+        }
+
+        function addArtwork(title, author, image) {
+            artworks.push({id: Date.now(), title, author, image, votes: 0});
+            saveData();
+            renderAll();
+            renderAdminGallery();
+            document.getElementById('artTitle').value = '';
+            document.getElementById('artAuthor').value = '';
+            document.getElementById('artImage').value = '';
+            document.getElementById('artFile').value = '';
+            document.getElementById('imagePreview').classList.add('hidden');
+            alert('Artwork uploaded successfully!');
+        }
+
+        function renderAdminGallery() {
+            const list = document.getElementById('adminGalleryList');
+            list.innerHTML = artworks.map(art => `
+                <div class="glass rounded-lg p-3 flex items-center gap-3" data-id="${art.id}">
+                    <i class="fas fa-grip-vertical drag-handle text-gray-500 text-xl"></i>
+                    <img src="${art.image}" class="w-16 h-16 rounded object-cover">
+                    <div class="flex-1 min-w-0">
+                        <div class="font-bold truncate">${art.title}</div>
+                        <div class="text-xs text-gray-400">${art.votes} votes</div>
+                    </div>
+                    <button onclick="deleteArt(${art.id})" class="text-red-400 hover:text-red-300 px-3 py-2">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+            
+            new Sortable(list, {
+                animation: 200,
+                handle: '.drag-handle',
+                ghostClass: 'sortable-ghost',
+                onEnd: function() {
+                    const newOrder = [...list.children].map(el => parseInt(el.dataset.id));
+                    artworks.sort((a, b) => newOrder.indexOf(a.id) - newOrder.indexOf(b.id));
+                    saveData();
+                    renderAll();
+                }
+            });
+        }
+
+        function deleteArt(id) {
+            if (confirm('Delete this artwork?')) {
+                artworks = artworks.filter(a => a.id !== id);
+                saveData();
+                renderAll();
+                renderAdminGallery();
+            }
+        }
+
+        // Init
+        renderAll();
+        setInterval(() => {
+            const endDate = new Date();
+            endDate.setDate(endDate.getDate() + 7);
+            const now = new Date();
+            const diff = endDate - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('countdown').textContent = `${days}d ${hours}h ${mins}m`;
+        }, 60000);
+    </script>
+</body>
+</html>

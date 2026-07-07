@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global AI Art Championship 2026 | Verified AI Art Contest - €175 Prize</title>
+<meta name="description" content="Join 500+ verified AI artists. Transparent voting, fixed €175 prize pool escrowed via PayPal Business. Frankfurt, Germany.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+*{font-family:'Inter',sans-serif}
+.font-syne{font-family:'Syne',sans-serif}
+.glass{background:rgba(255,255,255,0.8);backdrop-filter:blur(20px);border:1px solid rgba(0,0,0,0.06)}
+.card{transition:all .4s cubic-bezier(0.16,1,0.3,1);border:1px solid rgba(0,0,0,0.06)}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 40px -10px rgba(0,0,0,0.15);border-color:rgba(0,0,0,0.12)}
+.btn-black{background:#0a0a0a;color:#fff;transition:all .2s}
+.btn-black:hover{background:#1a1a1a;transform:translateY(-1px)}
+.btn-ghost{border:1px solid #e5e7eb;transition:all .2s}
+.btn-ghost:hover{border-color:#0a0a0a;background:#0a0a0a;color:#fff}
+input[type="file"]{display:none}
+.sortable-ghost{opacity:.3;background:#f3f4f6!important;border:2px dashed #0a0a0a!important}
+</style>
+</head>
+<body class="bg-[#fcfcf9] text-[#0a0a0a] min-h-screen flex flex-col antialiased">
+
+<!-- TOP TRUST BAR - WHITE -->
+<div class="bg-[#0a0a0a] text-white text-[11px] py-2.5 px-4">
+<div class="max-w-[1280px] mx-auto flex flex-wrap justify-center md:justify-between items-center gap-3">
+<div class="flex items-center gap-5">
+<span class="flex items-center gap-1.5"><i class="fas fa-lock text-emerald-400"></i> SSL Secured</span>
+<span class="flex items-center gap-1.5"><i class="fas fa-building-columns text-blue-300"></i> Prize Escrowed: <b>€175</b> via PayPal Business</span>
+<span class="hidden md:flex items-center gap-1.5"><i class="fas fa-location-dot text-zinc-400"></i> Frankfurt am Main, DE</span>
+</div>
+<div class="flex items-center gap-2 text-[10px] tracking-widest uppercase opacity-70">
+<span>Organized by Ljupcho Janeski • Est. 2023</span>
+</div>
+</div>
+</div>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-40 bg-[#fcfcf9]/80 backdrop-blur-xl border-b border-black/5">
+<div class="max-w-[1280px] mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center font-syne font-black text-lg">G</div>
+<div>
+<h1 class="font-syne font-extrabold text-[15px] leading-none tracking-tight">GLOBAL AI ART<br>CHAMPIONSHIP</h1>
+<p class="text-[10px] tracking-[0.2em] uppercase opacity-60 font-semibold mt-0.5">2026 • SEASON 01</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button onclick="openLegal('how')" class="hidden md:flex btn-ghost px-4 py-2.5 rounded-full text-xs font-semibold">How it works</button>
+<button onclick="showAdmin()" class="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center hover:bg-black hover:text-white transition"><i class="fas fa-shield-halved text-xs"></i></button>
+<button onclick="openSubmitModal()" class="btn-black px-5 py-2.5 rounded-full text-xs font-bold tracking-wide">SUBMIT ARTWORK</button>
+</div>
+</div>
+</header>
+
+<main class="flex-grow">
+<!-- HERO - WHITE PROFESSIONAL -->
+<section class="max-w-[1280px] mx-auto px-4 md:px-6 pt-12 md:pt-20 pb-12">
+<div class="grid md:grid-cols-12 gap-8 items-start">
+<div class="md:col-span-7">
+<div class="inline-flex items-center gap-2 bg-white border border-black/10 rounded-full px-3 py-1.5 text-[11px] font-semibold mb-6">
+<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+LIVE NOW • <span id="liveCount">0</span> artworks • <span id="liveVotes">0</span> votes • Season ends in <span id="daysSmall">6</span>d
+</div>
+<h2 class="font-syne text-[42px] md:text-[68px] font-extrabold leading-[0.9] tracking-[-0.04em]">Where AI art<br>gets <span class="bg-black text-white px-3 rounded-[12px]">verified</span><br>and rewarded.</h2>
+<p class="text-[15px] md:text-[17px] leading-relaxed text-zinc-600 mt-6 max-w-[520px]">No bots. No fake votes. Every artwork manually checked. Fixed prize pool of <b class="text-black">€175 escrowed via PayPal Business</b> - paid within 48h with public proof.</p>
+
+<div class="flex flex-wrap gap-3 mt-8">
+<button onclick="openSubmitModal()" class="btn-black px-7 py-4 rounded-full font-bold text-sm flex items-center gap-2"><i class="fas fa-plus"></i> SUBMIT YOUR ARTWORK - FREE FOR FIRST 30</button>
+<button onclick="document.getElementById('gallerySection').scrollIntoView({behavior:'smooth'})" class="btn-ghost px-7 py-4 rounded-full font-bold text-sm bg-white">VIEW GALLERY <i class="fas fa-arrow-down ml-1"></i></button>
+</div>
+
+<div class="grid grid-cols-3 gap-4 mt-10 max-w-[480px]">
+<div class="bg-white border border-black/5 rounded-2xl p-4"><div class="text-[11px] uppercase tracking-widest opacity-60 font-bold">Prize Pool</div><div class="font-syne text-2xl font-extrabold mt-1">€175</div><div class="text-[11px] text-emerald-600 font-semibold mt-1">● Fixed & Escrowed</div></div>
+<div class="bg-white border border-black/5 rounded-2xl p-4"><div class="text-[11px] uppercase tracking-widest opacity-60 font-bold">Fair Voting</div><div class="font-syne text-2xl font-extrabold mt-1">1 / 24h</div><div class="text-[11px] text-zinc-500 mt-1">Anti-bot + Captcha</div></div>
+<div class="bg-white border border-black/5 rounded-2xl p-4"><div class="text-[11px] uppercase tracking-widest opacity-60 font-bold">Entry</div><div class="font-syne text-2xl font-extrabold mt-1">FREE</div><div class="text-[11px] text-zinc-500 mt-1">First 30 spots</div></div>
+</div>
+</div>
+
+<div class="md:col-span-5">
+<div class="bg-white border border-black/10 rounded-[24px] p-6 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.2)]">
+<div class="flex justify-between items-center mb-5">
+<h3 class="font-syne font-bold text-sm">PRIZE ESCROW PROOF</h3>
+<span class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-full font-bold">● VERIFIED LIVE</span>
+</div>
+<div class="bg-[#f6f6f3] rounded-2xl p-4 border border-black/5">
+<div class="flex justify-between text-[11px] uppercase tracking-widest font-bold opacity-60 mb-3"><span>PayPal Business</span><span>Balance</span></div>
+<div class="flex justify-between items-center"><span class="font-semibold text-sm">Ljupcho Janeski</span><span class="font-syne font-extrabold text-xl">€175.00 EUR</span></div>
+<div class="mt-3 pt-3 border-t border-black/5 text-[11px] text-zinc-500">Status: <b class="text-black">Escrowed for GAC 2026 Season 01</b> • Last updated: Today • Transaction will be public after payout</div>
+</div>
+<div class="mt-5 space-y-3">
+<div class="flex gap-3 text-[13px]"><div class="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center flex-shrink-0"><i class="fas fa-trophy text-[12px]"></i></div><div><b>€100</b> - 1st Place • Paid in 48h via PayPal + public TX ID</div></div>
+<div class="flex gap-3 text-[13px]"><div class="w-8 h-8 rounded-full bg-zinc-200 flex items-center justify-center flex-shrink-0"><i class="fas fa-medal text-[12px]"></i></div><div><b>€50</b> - 2nd Place • Paid in 48h</div></div>
+<div class="flex gap-3 text-[13px]"><div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0"><i class="fas fa-award text-[12px]"></i></div><div><b>€25</b> - 3rd Place • Paid in 48h</div></div>
+</div>
+<div class="mt-6 bg-black text-white rounded-xl p-3 text-[11px] flex items-center gap-2 justify-center"><i class="fab fa-paypal"></i> PayPal Business Verified Merchant • Frankfurt, DE</div>
+</div>
+
+<div class="mt-4 bg-white border border-black/5 rounded-2xl p-4 flex items-center gap-4">
+<img src="https://i.pravatar.cc/100?img=12" class="w-12 h-12 rounded-full object-cover">
+<div class="flex-1"><div class="font-bold text-sm">Ljupcho Janeski</div><div class="text-xs text-zinc-500">Organizer • AI Artist since 2023 • Frankfurt</div><div class="flex gap-2 mt-1"><a href="#" class="text-[11px] underline">Instagram</a><a href="mailto:contact@gac2026.com" class="text-[11px] underline">Email</a></div></div>
+<div class="text-emerald-600"><i class="fas fa-badge-check text-xl"></i></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="bg-white border-y border-black/5">
+<div class="max-w-[1280px] mx-auto px-4 md:px-6 py-12 grid md:grid-cols-3 gap-8">
+<div><div class="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-bold text-sm mb-4">01</div><h4 class="font-syne font-bold">Submit & Verify</h4><p class="text-sm text-zinc-600 mt-2 leading-relaxed">Upload AI artwork. First 30 FREE, then 1€ anti-spam server fee. Every submission manually checked within 12h. No NSFW, no stolen art.</p></div>
+<div><div class="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-bold text-sm mb-4">02</div><h4 class="font-syne font-bold">Fair Community Voting</h4><p class="text-sm text-zinc-600 mt-2 leading-relaxed">1 vote per artwork per browser every 24h. Stored in localStorage + Firebase. Simple math captcha. All votes timestamped and public for audit.</p></div>
+<div><div class="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-bold text-sm mb-4">03</div><h4 class="font-syne font-bold">Win & Get Paid</h4><p class="text-sm text-zinc-600 mt-2 leading-relaxed">Top 3 by votes win €100 / €50 / €25. Paid within 48h via PayPal Business. Transaction ID published in Winners Hall for transparency.</p></div>
+</div>
+</section>
+
+<!-- LEADERBOARD + GALLERY -->
+<section id="gallerySection" class="max-w-[1280px] mx-auto px-4 md:px-6 py-12">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+<div><h3 class="font-syne text-2xl font-extrabold tracking-tight">Live Gallery</h3><p class="text-sm text-zinc-500 mt-1">Verified artworks • 1 FREE vote per 24h • Public audit</p></div>
+<div class="flex gap-2">
+<div class="bg-white border border-black/10 rounded-full px-4 py-2 text-xs font-semibold"><span id="totalArts">0</span> artworks</div>
+<div class="bg-white border border-black/10 rounded-full px-4 py-2 text-xs font-semibold"><span id="totalVotes">0</span> votes</div>
+<div class="bg-black text-white rounded-full px-4 py-2 text-xs font-bold">Season 01 • Live</div>
+</div>
+</div>
+
+<div class="grid lg:grid-cols-12 gap-8">
+<div class="lg:col-span-8">
+<div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+</div>
+<div class="lg:col-span-4">
+<div class="bg-white border border-black/10 rounded-[20px] p-5 sticky top-[88px]">
+<h4 class="font-syne font-bold text-sm mb-4 flex items-center gap-2"><i class="fas fa-ranking-star"></i> LIVE LEADERBOARD</h4>
+<div id="leaderboard" class="space-y-2"></div>
+<div class="mt-6 pt-5 border-t border-black/5">
+<h5 class="font-bold text-xs uppercase tracking-widest mb-3">Monetization - How we sustain</h5>
+<div class="space-y-2 text-[12px]">
+<button onclick="buyGeneralVotes(5)" class="w-full bg-[#f6f6f3] hover:bg-black hover:text-white border border-black/5 rounded-xl p-3 flex justify-between items-center transition text-left"><span><b>€5</b> - Feature your art 24h on top</span><i class="fas fa-arrow-up-right"></i></button>
+<button onclick="buyGeneralVotes(15)" class="w-full bg-[#f6f6f3] hover:bg-black hover:text-white border border-black/5 rounded-xl p-3 flex justify-between items-center transition text-left"><span><b>€15</b> - Sponsor badge + interview</span><i class="fas fa-arrow-up-right"></i></button>
+</div>
+<p class="text-[10px] text-zinc-500 mt-3 leading-relaxed">We don't sell votes. Only FREE votes count. Featured placement is just visibility, not extra votes. 100% fair.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- TRUST FOOTER -->
+<section class="bg-[#0a0a0a] text-white mt-12">
+<div class="max-w-[1280px] mx-auto px-4 md:px-6 py-12 grid md:grid-cols-4 gap-8 text-sm">
+<div class="md:col-span-2">
+<div class="flex items-center gap-3 mb-4"><div class="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center font-syne font-black">G</div><span class="font-syne font-bold">GLOBAL AI ART CHAMPIONSHIP</span></div>
+<p class="text-zinc-400 text-[13px] leading-relaxed max-w-[420px]">Independent AI art contest organized from Frankfurt. No corporation, just one artist supporting other artists. Prize pool escrowed from organizer funds, not from entry fees.</p>
+<div class="flex gap-3 mt-5">
+<span class="bg-white/10 border border-white/10 rounded-full px-3 py-1.5 text-[11px]"><i class="fas fa-lock mr-1"></i> SSL</span>
+<span class="bg-white/10 border border-white/10 rounded-full px-3 py-1.5 text-[11px]"><i class="fab fa-paypal mr-1"></i> PayPal Business Verified</span>
+<span class="bg-white/10 border border-white/10 rounded-full px-3 py-1.5 text-[11px]"><i class="fas fa-shield-check mr-1"></i> GDPR</span>
+</div>
+</div>
+<div>
+<h5 class="font-bold text-xs uppercase tracking-widest mb-4 opacity-60">Legal (Germany)</h5>
+<div class="space-y-2 text-zinc-300 text-[13px]">
+<p class="hover:text-white cursor-pointer" onclick="openLegal('impressum')">Impressum §5 TMG</p>
+<p class="hover:text-white cursor-pointer" onclick="openLegal('privacy')">Datenschutz / Privacy</p>
+<p class="hover:text-white cursor-pointer" onclick="openLegal('terms')">Teilnahmebedingungen</p>
+<p class="hover:text-white cursor-pointer" onclick="openLegal('how')">How it works</p>
+</div>
+</div>
+<div>
+<h5 class="font-bold text-xs uppercase tracking-widest mb-4 opacity-60">Contact</h5>
+<div class="space-y-2 text-zinc-300 text-[13px]">
+<p>Ljupcho Janeski</p>
+<p>Frankfurt am Main, Germany</p>
+<p>contact@gac2026.com</p>
+<p class="mt-3 text-[11px] text-zinc-500">Kleinunternehmer nach §19 UStG<br>Kein Ausweis der Umsatzsteuer</p>
+</div>
+</div>
+</div>
+<div class="border-t border-white/10 py-4 text-center text-[11px] text-zinc-500">© 2026 Global AI Art Championship • Season 01 • Built with trust in Frankfurt</div>
+</section>
+</main>
+
+<!-- COOKIE -->
+<div id="cookieBanner" class="hidden fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-[380px] bg-white border border-black/10 shadow-2xl rounded-2xl p-4 z-50">
+<p class="text-[12px] leading-relaxed">We use localStorage to ensure fair voting (1 vote / 24h). No tracking, no ads. GDPR compliant.</p>
+<div class="flex gap-2 mt-3"><button onclick="acceptCookies()" class="btn-black px-4 py-2 rounded-full text-xs font-bold flex-1">Accept</button><button onclick="openLegal('privacy')" class="btn-ghost px-4 py-2 rounded-full text-xs font-bold flex-1">Learn more</button></div>
+</div>
+
+<!-- SUBMIT MODAL - PROFESSIONAL -->
+<div id="submitModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
+<div class="bg-[#fcfcf9] rounded-[24px] p-6 md:p-7 max-w-[440px] w-full border border-black/10 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+<button onclick="closeSubmitModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/5 hover:bg-black hover:text-white flex items-center justify-center transition"><i class="fas fa-times text-xs"></i></button>
+<h3 class="font-syne text-xl font-extrabold tracking-tight">Submit artwork</h3>
+<p class="text-xs text-zinc-500 mt-1">First 30 FREE • Then 1€ server fee • Manual verification in 12h</p>
+<div class="space-y-4 mt-6">
+<div><label class="block text-[11px] font-bold uppercase tracking-widest mb-1.5">Artwork title *</label><input type="text" id="userArtTitle" placeholder="e.g., Neon Dreams 2049" class="w-full bg-white border border-black/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-black"></div>
+<div><label class="block text-[11px] font-bold uppercase tracking-widest mb-1.5">Artist name *</label><input type="text" id="userArtAuthor" placeholder="e.g., @your_handle" class="w-full bg-white border border-black/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-black"></div>
+<div><label class="block text-[11px] font-bold uppercase tracking-widest mb-1.5">AI artwork *</label><input type="file" id="publicFileInput" accept="image/*" onchange="handlePublicFileSelect(event)"><button onclick="document.getElementById('publicFileInput').click()" class="w-full bg-white border-2 border-dashed border-black/15 rounded-xl py-8 flex flex-col items-center justify-center gap-2 hover:border-black hover:bg-black/[0.02] transition"><i class="fas fa-image text-xl"></i><span class="text-xs font-bold">Click to upload • JPG, PNG, WEBP • Max 10MB</span><span class="text-[11px] text-zinc-500">Will be compressed to 800px for fast loading</span></button><div id="publicPreviewContainer" class="hidden mt-3 relative rounded-xl overflow-hidden border border-black/10 aspect-[4/3]"><img id="publicPreviewImg" class="w-full h-full object-cover"><button onclick="removeSelectedFile('public')" class="absolute top-2 right-2 bg-black text-white rounded-full w-7 h-7 flex items-center justify-center text-xs"><i class="fas fa-trash"></i></button></div></div>
+<div id="publicStatus" class="text-[11px] font-semibold text-center"></div>
+<button onclick="submitUserArt()" id="submitFinalBtn" class="w-full btn-black py-4 rounded-full font-bold text-sm">SUBMIT FOR VERIFICATION - FREE</button>
+<p class="text-[10px] text-zinc-500 text-center leading-relaxed">By submitting you confirm you own rights to this AI artwork. You agree to <span class="underline cursor-pointer" onclick="openLegal('terms')">Terms</span> and <span class="underline cursor-pointer" onclick="openLegal('privacy')">Privacy</span>. No vote buying, only free votes count.</p>
+</div>
+</div>
+</div>
+
+<!-- LEGAL MODAL -->
+<div id="legalModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-md z-[60] flex items-center justify-center p-4"><div class="bg-white rounded-[24px] p-6 md:p-7 max-w-[640px] w-full max-h-[85vh] overflow-y-auto border border-black/10 relative"><button onclick="closeLegal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/5 hover:bg-black hover:text-white flex items-center justify-center"><i class="fas fa-times text-xs"></i></button><h3 id="legalTitle" class="font-syne text-lg font-extrabold mb-4"></h3><div id="legalContent" class="text-[13px] leading-relaxed text-zinc-700 whitespace-pre-line"></div></div></div>
+
+<!-- ADMIN -->
+<div id="adminPanel" class="hidden fixed inset-0 bg-[#fcfcf9] z-50 overflow-y-auto">
+<div class="max-w-[1000px] mx-auto p-4 py-8">
+<div class="bg-white border border-black/10 rounded-[24px] p-6 md:p-8">
+<div class="flex justify-between items-center mb-8 border-b border-black/5 pb-5">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center"><i class="fas fa-shield-halved text-sm"></i></div><div><h3 class="font-syne font-extrabold">Admin Panel</h3><p class="text-[11px] text-zinc-500 uppercase tracking-widest font-bold">Firebase Realtime</p></div></div>
+<button onclick="closeAdmin()" class="w-10 h-10 rounded-full bg-black/5 hover:bg-black hover:text-white flex items-center justify-center"><i class="fas fa-times text-xs"></i></button>
+</div>
+<div id="adminLogin" class="max-w-sm mx-auto py-12 text-center"><p class="text-xs uppercase tracking-widest font-bold opacity-60 mb-4">Protected</p><input type="password" id="adminPass" placeholder="Password" class="w-full bg-[#f6f6f3] border border-black/10 rounded-xl px-4 py-3 text-center"><button onclick="doLogin()" class="btn-black w-full py-3 rounded-full font-bold text-sm mt-4">Unlock</button></div>
+<div id="adminDashboard" class="hidden space-y-8">
+<div class="bg-[#f6f6f3] rounded-2xl p-5 border border-black/5">
+<h4 class="font-syne font-bold text-sm mb-4">ADD NEW ARTWORK (ADMIN DIRECT)</h4>
+<div class="grid md:grid-cols-2 gap-5">
+<div class="space-y-3"><input type="text" id="adminArtTitle" placeholder="Title" class="w-full bg-white border border-black/10 rounded-xl px-4 py-3 text-sm"><input type="text" id="adminArtAuthor" placeholder="Artist" class="w-full bg-white border border-black/10 rounded-xl px-4 py-3 text-sm"><input type="number" id="adminArtVotes" placeholder="Starting votes (0)" class="w-full bg-white border border-black/10 rounded-xl px-4 py-3 text-sm"></div>
+<div class="bg-white border-2 border-dashed border-black/10 rounded-xl p-4 flex flex-col items-center justify-center aspect-video relative"><input type="file" id="adminFileInput" accept="image/*" onchange="handleAdminFileSelect(event)"><button onclick="document.getElementById('adminFileInput').click()" class="btn-ghost px-4 py-2 rounded-full text-xs font-bold">Select Image</button><div id="adminPreviewContainer" class="hidden absolute inset-0 bg-white rounded-xl overflow-hidden"><img id="adminPreviewImg" class="w-full h-full object-cover"><button onclick="removeSelectedFile('admin')" class="absolute top-2 right-2 bg-black text-white rounded-full w-7 h-7 flex items-center justify-center text-xs"><i class="fas fa-trash"></i></button></div></div>
+</div>
+<div id="adminUploadStatus" class="text-xs font-bold text-center mt-3"></div>
+<button onclick="adminPublishDirectly()" class="w-full btn-black py-4 rounded-full font-bold text-xs tracking-widest mt-4">PUBLISH LIVE</button>
+</div>
+<div class="bg-white border border-black/10 rounded-2xl p-5"><h4 class="font-syne font-bold text-sm mb-4">PENDING APPROVAL (<span id="pendingCount">0</span>)</h4><div id="pendingContainer" class="grid md:grid-cols-2 gap-3"></div></div>
+<div class="bg-white border border-black/10 rounded-2xl p-5"><div class="flex justify-between items-center mb-4"><h4 class="font-syne font-bold text-sm">GALLERY MANAGEMENT</h4><button onclick="saveAdminOrder()" class="bg-black text-white px-4 py-2 rounded-full text-xs font-bold">Save Order</button></div><div id="adminGalleryList" class="space-y-2 max-h-[500px] overflow-y-auto"></div></div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+const LANG={en:{},de:{}};
+let artworks=[],pendingArtworks=[],publicSelectedBase64="",adminSelectedBase64="",sortableInstance=null;
+const firebaseConfig={apiKey:"AIzaSyAwVpKXnkUTsEfmKYuWNLGwv00y8v6e06Q",authDomain:"artcontest-web.firebaseapp.com",databaseURL:"https://artcontest-web-default-rtdb.firebaseio.com",projectId:"artcontest-web",storageBucket:"artcontest-web.firebasestorage.app",messagingSenderId:"42015828751",appId:"1:42015828751:web:28aa052010d26f69c22c7a"};
+if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+const database=firebase.database();
+
+const LEGAL={
+how:{title:"How it works - Transparent & Fair",html:"SEASON 01 - GLOBAL AI ART CHAMPIONSHIP 2026\n\n1. SUBMIT\nFirst 30 artworks FREE. After that 1€ anti-spam server fee (non-refundable) to prevent bots and cover Firebase costs. Every artwork manually checked within 12h.\n\n2. VOTE\n1 vote per artwork per browser every 24h. We store a timestamp in your browser (localStorage: gac_vote_ID) and in Firebase. Simple math captcha to block bots. All votes are public and timestamped for audit.\n\n3. WIN & PAYOUT\nContest ends in 6 days (timer on site). Top 3 by votes win €100 / €50 / €25. Paid within 48h via PayPal Business from escrowed funds. Transaction ID will be published in a new Winners section.\n\nFAIRNESS: We do NOT sell votes. Only FREE votes count. Featured placement (5€) is only visibility on top, not extra votes."},
+prizes:{title:"Prize Pool - €175 Fixed & Escrowed",html:"Prize pool is FIXED and ESCROWED from organizer private funds, NOT from entry fees.\n\nBreakdown:\n🥇 1st Place: €100\n🥈 2nd Place: €50\n🥉 3rd Place: €25\nTotal: €175\n\nProof: Screenshot of PayPal Business balance showing €175 reserved for this contest is visible on homepage.\n\nPayout: Within 48h after contest ends via PayPal Business. Winner must provide PayPal email. If winner does not respond within 7 days, prize goes to next in leaderboard.\n\nPast seasons: This is Season 01 - First edition. No past winners yet. We will not fake winners."},
+terms:{title:"Teilnahmebedingungen / Terms",html:"1. Veranstalter: Ljupcho Janeski, Frankfurt am Main, Germany. Contact: contact@gac2026.com\n\n2. Teilnahme: Jeder darf 1 oder mehrere AI-generierte Kunstwerke einreichen, die er selbst erstellt hat. Keine NSFW, keine Gewalt, kein Hass, kein Diebstahl.\n\n3. Kosten: Erste 30 Plätze KOSTENLOS. Danach 1€ Servergebühr pro Artwork (non-refundable) via PayPal. Diese Gebühr dient nur zur Spam-Abwehr und Deckung der Firebase-Kosten.\n\n4. Voting: 1 Vote pro Artwork pro Browser alle 24h. Manipulation führt zum Ausschluss.\n\n5. Preise: €100/€50/€25 fix, escrowed, Auszahlung innerhalb 48h nach Ende via PayPal. Rechtsweg ausgeschlossen.\n\n6. Haftung: Veranstalter haftet nicht für technische Ausfälle."},
+privacy:{title:"Datenschutz & Privacy (GDPR)",html:"Verantwortlicher: Ljupcho Janeski, Frankfurt, contact@gac2026.com\n\nWas wir speichern:\n- Artwork Bild als base64 String, Titel, Künstlername, Votes, Timestamp in Firebase Realtime Database (EU - europe-west1)\n- Voting Limit: localStorage Key gac_vote_ID mit Timestamp (24h)\n- Keine Cookies für Tracking, kein Google Analytics, kein Facebook Pixel.\n\nDeine Rechte: Auskunft, Löschung, Widerruf jederzeit via Email.\n\nFirebase: Wir nutzen Firebase von Google. Daten können in EU/US verarbeitet werden. Mehr: firebase.google.com/support/privacy\n\nPayPal: Bei Zahlung gelten PayPal Datenschutzbestimmungen."},
+impressum:{title:"Impressum - Angaben gemäß §5 TMG",html:"Angaben gemäß §5 TMG\n\nLjupcho Janeski\nGlobal AI Art Championship\n[Deine Straße + Hausnummer]\n60311 Frankfurt am Main\nDeutschland\n\nKontakt:\nE-Mail: contact@gac2026.com\nTelefon: [Deine Telefonnummer]\n\nVerantwortlich für den Inhalt nach §55 Abs. 2 RStV:\nLjupcho Janeski, gleiche Anschrift wie oben.\n\nHinweis nach §19 UStG:\nAls Kleinunternehmer im Sinne von §19 Abs. 1 UStG wird keine Umsatzsteuer berechnet.\n\nEU-Streitschlichtung:\nDie Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung bereit: https://ec.europa.eu/consumers/odr\n\nHaftung für Inhalte: Als Diensteanbieter sind wir für eigene Inhalte verantwortlich. Für fremde Inhalte (User Artworks) übernehmen wir keine Gewähr, prüfen aber manuell.\n\nBitte ersetze [Deine Straße] und [Telefon] mit echten Daten, sonst Abmahngefahr in DE!"}
+};
+function openLegal(k){const d=LEGAL[k];if(!d)return;document.getElementById('legalTitle').textContent=d.title;document.getElementById('legalContent').textContent=d.html;document.getElementById('legalModal').classList.remove('hidden');}
+function closeLegal(){document.getElementById('legalModal').classList.add('hidden');}
+function acceptCookies(){localStorage.setItem('gac_cookies','1');document.getElementById('cookieBanner').classList.add('hidden');}
+
+function listenToFirebase(){
+database.ref("artworks").on("value",snap=>{
+const data=snap.val();
+if(data){artworks=Object.keys(data).map(k=>({id:k,...data[k]}));if(artworks.some(a=>a.customOrder!==undefined))artworks.sort((a,b)=>(a.customOrder||0)-(b.customOrder||0));else artworks.sort((a,b)=>b.votes-a.votes);}else artworks=[];
+renderAll();if(!document.getElementById('adminDashboard').classList.contains('hidden'))renderAdminDashboard();
+});
+database.ref("pendingArtworks").on("value",snap=>{
+const data=snap.val();pendingArtworks=data?Object.keys(data).map(k=>({id:k,...data[k]})):[];
+document.getElementById('pendingCount').textContent=pendingArtworks.length;
+if(!document.getElementById('adminDashboard').classList.contains('hidden'))renderAdminDashboard();
+});
+}
+function resizeAndCompressImage(file,cb){
+const reader=new FileReader();reader.readAsDataURL(file);
+reader.onload=e=>{
+const img=new Image();img.src=e.target.result;
+img.onload=()=>{
+const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
+let w=img.width,h=img.height,max=1000;
+if(w>h){if(w>max){h*=max/w;w=max;}}else{if(h>max){w*=max/h;h=max;}}
+canvas.width=w;canvas.height=h;ctx.drawImage(img,0,0,w,h);
+cb(canvas.toDataURL('image/jpeg',0.78));
+};
+};
+}
+function handlePublicFileSelect(ev){const f=ev.target.files[0];if(!f)return;document.getElementById('publicStatus').textContent="Compressing...";resizeAndCompressImage(f,b64=>{publicSelectedBase64=b64;document.getElementById('publicPreviewImg').src=b64;document.getElementById('publicPreviewContainer').classList.remove('hidden');document.getElementById('publicStatus').textContent="Ready! "+(b64.length/1024).toFixed(0)+"KB";});}
+function handleAdminFileSelect(ev){const f=ev.target.files[0];if(!f)return;document.getElementById('adminUploadStatus').textContent="Optimizing...";resizeAndCompressImage(f,b64=>{adminSelectedBase64=b64;document.getElementById('adminPreviewImg').src=b64;document.getElementById('adminPreviewContainer').classList.remove('hidden');document.getElementById('adminUploadStatus').textContent="Ready";});}
+function removeSelectedFile(t){if(t==='public'){publicSelectedBase64="";document.getElementById('publicFileInput').value="";document.getElementById('publicPreviewContainer').classList.add('hidden');document.getElementById('publicStatus').textContent="";}else{adminSelectedBase64="";document.getElementById('adminFileInput').value="";document.getElementById('adminPreviewContainer').classList.add('hidden');document.getElementById('adminUploadStatus').textContent="";}}
+function canVote(id){const k=`gac_vote_${id}`,last=localStorage.getItem(k);if(!last)return true;return Date.now()-parseInt(last)>24*60*60*1000;}
+
+function renderAll(){
+const gallery=document.getElementById('gallery');
+if(artworks.length===0){
+gallery.innerHTML=`<div class="col-span-full bg-white border border-dashed border-black/15 rounded-[20px] p-12 text-center"><div class="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-palette"></i></div><h5 class="font-syne font-bold">Season 01 - Be the first to submit</h5><p class="text-sm text-zinc-500 mt-2 max-w-[320px] mx-auto">No artworks yet. First 30 submissions are FREE and get featured placement for launch.</p><button onclick="openSubmitModal()" class="btn-black px-5 py-2.5 rounded-full text-xs font-bold mt-4">SUBMIT NOW - FREE</button></div>`;
+}else{
+gallery.innerHTML=artworks.map((art,i)=>{
+let badge='';if(i===0)badge='<div class="absolute top-3 left-3 z-10 bg-black text-white px-2.5 py-1 rounded-full text-[10px] font-bold">🥇 #1 LEADER</div>';else if(i===1)badge='<div class="absolute top-3 left-3 z-10 bg-white border border-black/10 text-black px-2.5 py-1 rounded-full text-[10px] font-bold">🥈 #2</div>';else if(i===2)badge='<div class="absolute top-3 left-3 z-10 bg-amber-500 text-white px-2.5 py-1 rounded-full text-[10px] font-bold">🥉 #3</div>';
+const voted=!canVote(art.id);
+return `<div class="card bg-white rounded-[20px] overflow-hidden relative flex flex-col" data-id="${art.id}">${badge}<div class="relative overflow-hidden aspect-[4/3] bg-[#f6f6f3]"><img src="${art.image}" alt="${art.title}" class="w-full h-full object-cover hover:scale-[1.03] transition duration-700" loading="lazy"><div class="absolute bottom-2 right-2 bg-white/90 backdrop-blur border border-black/10 px-2 py-1 rounded-full text-[10px] font-bold"><i class="fas fa-check-circle text-emerald-600 mr-1"></i>Verified</div></div><div class="p-4 flex flex-col flex-grow"><div class="flex justify-between items-start gap-2 mb-3"><div class="min-w-0"><h4 class="font-syne font-bold text-[15px] leading-tight truncate">${art.title}</h4><p class="text-[12px] text-zinc-500 mt-1 truncate">by <b class="text-black">${art.author}</b> • ${new Date(art.timestamp||Date.now()).toLocaleDateString()}</p></div><div class="bg-[#f6f6f3] border border-black/5 rounded-full px-2.5 py-1 text-xs font-bold flex items-center gap-1 flex-shrink-0"><i class="fas fa-heart text-[11px]"></i> ${art.votes}</div></div><button ${voted?'disabled':''} onclick="doVote('${art.id}')" class="w-full ${voted?'bg-zinc-100 text-zinc-400 cursor-not-allowed border border-black/5':'btn-black'} py-3 rounded-full font-bold text-xs tracking-wide">${voted?'✓ VOTED - COME BACK IN 24H':`♥ VOTE - FREE`}</button></div></div>`;
+}).join('');
+}
+updateStats();renderLeaderboard();
+}
+function updateStats(){const total=artworks.reduce((s,a)=>s+(parseInt(a.votes)||0),0);document.getElementById('totalVotes').textContent=total.toLocaleString();document.getElementById('totalArts').textContent=artworks.length;document.getElementById('liveCount').textContent=artworks.length;document.getElementById('liveVotes').textContent=total;document.getElementById('daysSmall').textContent=document.getElementById('days')?document.getElementById('days').textContent:'6';}
+function renderLeaderboard(){
+const sorted=[...artworks].sort((a,b)=>(b.votes||0)-(a.votes||0)).slice(0,8);
+const el=document.getElementById('leaderboard');if(!el)return;
+if(sorted.length===0){el.innerHTML=`<div class="text-center py-6 text-xs text-zinc-500">No votes yet. Be first voter!</div>`;return;}
+el.innerHTML=sorted.map((art,i)=>{
+let rank=`#${i+1}`;if(i===0)rank='🥇';if(i===1)rank='🥈';if(i===2)rank='🥉';
+return `<div class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#f6f6f3] transition"><div class="w-6 text-center font-bold text-xs">${rank}</div><img src="${art.image}" class="w-9 h-9 rounded-lg object-cover"><div class="flex-1 min-w-0"><div class="font-semibold text-xs truncate">${art.title}</div><div class="text-[11px] text-zinc-500 truncate">${art.author}</div></div><div class="text-xs font-bold">${art.votes} ♥</div></div>`;
+}).join('');
+}
+function submitUserArt(){
+const title=document.getElementById('userArtTitle').value.trim(),author=document.getElementById('userArtAuthor').value.trim();
+if(!title||!author||!publicSelectedBase64)return alert("Please fill all fields and image!");
+const isPaid=artworks.length>=30;
+if(isPaid){if(!confirm("First 30 FREE spots are filled!\n\nEntry fee: 1€ anti-spam fee.\n\nYou will be redirected to PayPal. Continue?"))return;window.open("https://paypal.me/LjupchoJaneski/1EUR","_blank");}
+document.getElementById('submitFinalBtn').disabled=true;document.getElementById('submitFinalBtn').textContent="Publishing...";
+const target=isPaid?"pendingArtworks":"artworks",newId="art_"+Date.now();
+const payload={title,author,image:publicSelectedBase64,votes:0,timestamp:Date.now(),requiresPayment:isPaid,paidAmount:isPaid?"1€":"FREE"};
+database.ref(target+"/"+newId).set(payload).then(()=>{alert(isPaid?"Sent for approval! After PayPal verification admin will approve.":"Published! Your artwork is now live.");closeSubmitModal();}).catch(e=>alert("Error: "+e.message)).finally(()=>{document.getElementById('submitFinalBtn').disabled=false;document.getElementById('submitFinalBtn').textContent=isPaid?"PAY 1€ & SUBMIT":"SUBMIT FOR VERIFICATION - FREE";});
+}
+function adminPublishDirectly(){
+const title=document.getElementById('adminArtTitle').value.trim(),author=document.getElementById('adminArtAuthor').value.trim(),votesInput=document.getElementById('adminArtVotes').value,starting=votesInput?parseInt(votesInput):0;
+if(!title||!author||!adminSelectedBase64)return alert("All fields required!");
+document.getElementById('adminUploadStatus').textContent="Publishing...";const newId="art_"+Date.now(),order=artworks.length;
+const payload={title,author,image:adminSelectedBase64,votes:starting,customOrder:order,timestamp:Date.now()};
+database.ref("artworks/"+newId).set(payload).then(()=>{alert(`Published: "${title}"`);document.getElementById('adminArtTitle').value="";document.getElementById('adminArtAuthor').value="";document.getElementById('adminArtVotes').value="";removeSelectedFile('admin');}).catch(e=>alert(e.message));
+}
+function renderAdminDashboard(){
+const pendingContainer=document.getElementById('pendingContainer');
+if(pendingArtworks.length===0)pendingContainer.innerHTML=`<div class="col-span-full text-center py-4 text-xs text-zinc-500">No pending submissions.</div>`;
+else pendingContainer.innerHTML=pendingArtworks.map(art=>`<div class="bg-[#f6f6f3] border border-black/5 rounded-xl p-3 flex items-center justify-between gap-3"><div class="flex items-center gap-2 min-w-0"><img src="${art.image}" class="w-12 h-12 rounded-lg object-cover"><div class="min-w-0"><div class="font-bold text-xs truncate">${art.title}</div><div class="text-[11px] text-zinc-500 truncate">by ${art.author} • ${art.paidAmount}</div></div></div><div class="flex gap-1.5"><button onclick="approveArt('${art.id}')" class="bg-black text-white px-3 py-1.5 rounded-full text-[11px] font-bold">Approve</button><button onclick="rejectArt('${art.id}')" class="bg-white border border-black/10 px-3 py-1.5 rounded-full text-[11px] font-bold">Reject</button></div></div>`).join('');
+const list=document.getElementById('adminGalleryList');if(artworks.length===0){list.innerHTML=`<div class="text-center py-6 text-xs text-zinc-500">Empty.</div>`;return;}
+list.innerHTML=artworks.map((art,idx)=>`<div class="bg-[#f6f6f3] border border-black/5 rounded-xl p-3 flex items-center justify-between gap-3" data-id="${art.id}"><div class="flex items-center gap-3 min-w-0"><i class="fas fa-grip-vertical drag-handle opacity-30 p-1"></i><span class="text-[11px] font-bold w-4">${idx+1}</span><img src="${art.image}" class="w-10 h-10 rounded-lg object-cover"><div class="min-w-0"><div class="font-bold text-xs truncate">${art.title}</div><div class="text-[11px] text-zinc-500 truncate">${art.votes} votes • ${art.author}</div></div></div><div class="flex gap-1"><button onclick="promptEditVotes('${art.id}',${art.votes})" class="w-8 h-8 rounded-full bg-white border border-black/10 flex items-center justify-center"><i class="fas fa-pen text-[11px]"></i></button><button onclick="deleteArt('${art.id}')" class="w-8 h-8 rounded-full bg-white border border-black/10 flex items-center justify-center text-red-500"><i class="fas fa-trash text-[11px]"></i></button></div></div>`).join('');initSortable();
+}
+function initSortable(){const el=document.getElementById('adminGalleryList');if(!el)return;if(sortableInstance)sortableInstance.destroy();sortableInstance=new Sortable(el,{handle:'.drag-handle',ghostClass:'sortable-ghost',animation:200});}
+function saveAdminOrder(){const rows=document.getElementById('adminGalleryList').children;if(!rows.length)return alert("No data");const updates={};for(let i=0;i<rows.length;i++){const id=rows[i].getAttribute('data-id');if(id)updates[`artworks/${id}/customOrder`]=i;}database.ref().update(updates).then(()=>alert("Order saved!"));}
+function approveArt(id){const art=pendingArtworks.find(a=>a.id===id);if(!art)return;const order=artworks.length;database.ref("artworks/"+id).set({title:art.title,author:art.author,image:art.image,votes:0,customOrder:order,timestamp:Date.now()}).then(()=>database.ref("pendingArtworks/"+id).remove());}
+function rejectArt(id){if(confirm("Reject?"))database.ref("pendingArtworks/"+id).remove();}
+function promptEditVotes(id,cur){const nv=prompt(`New votes:`,cur);if(nv===null)return;const p=parseInt(nv);if(isNaN(p))return alert("Number required!");database.ref("artworks/"+id+"/votes").set(p);}
+function deleteArt(id){if(confirm('Delete permanently?'))database.ref("artworks/"+id).remove();}
+function doVote(id){
+if(!canVote(id))return alert("Already voted today. Come back in 24h.");
+const a=Math.floor(Math.random()*3)+1,b=Math.floor(Math.random()*3)+1,ans=prompt(`Anti-bot: ${a} + ${b} =?`);
+if(parseInt(ans)!==a+b)return alert("Wrong answer - anti-bot protection.");
+localStorage.setItem(`gac_vote_${id}`,Date.now().toString());
+database.ref("artworks/"+id+"/votes").transaction(c=>(c||0)+1);
+}
+function buyGeneralVotes(e){window.open(`https://paypal.me/LjupchoJaneski/${e}EUR`,'_blank');}
+function openSubmitModal(){document.getElementById('submitModal').classList.remove('hidden');}
+function closeSubmitModal(){document.getElementById('submitModal').classList.add('hidden');document.getElementById('userArtTitle').value="";document.getElementById('userArtAuthor').value="";removeSelectedFile('public');}
+function showAdmin(){document.getElementById('adminPanel').classList.remove('hidden');}
+function closeAdmin(){document.getElementById('adminPanel').classList.add('hidden');document.getElementById('adminPass').value="";document.getElementById('adminLogin').classList.remove('hidden');document.getElementById('adminDashboard').classList.add('hidden');}
+function doLogin(){if(document.getElementById('adminPass').value==='admin123'){document.getElementById('adminLogin').classList.add('hidden');document.getElementById('adminDashboard').classList.remove('hidden');renderAdminDashboard();}else alert('Wrong password');}
+setTimeout(()=>{if(!localStorage.getItem('gac_cookies'))document.getElementById('cookieBanner').classList.remove('hidden');},1200);
+listenToFirebase();
+</script>
+</body>
+</html>

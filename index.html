@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Global AI Art Championship 2026 | €175 Prize • 500+ Artists • Sponsor Us</title>
+<meta name="description" content="Join 500+ AI artists. €175 escrowed prize. Sponsor packages from €25. Featured by AI art community. Frankfurt, Germany.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{font-family:'Inter',sans-serif;box-sizing:border-box}
+.font-display{font-family:'Syne',sans-serif}
+body{background:#fafaf8;overflow-x:hidden}
+.card{transition:all .4s cubic-bezier(0.16,1,0.3,1)}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 40px -12px rgba(0,0,0,0.15)}
+.vote-btn{background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;transition:all .2s}
+.vote-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px -5px rgba(124,58,237,0.5)}
+.vote-btn:disabled{background:#e5e7eb;color:#9ca3af}
+input[type="file"]{display:none}
+.marquee{animation:marquee 30s linear infinite}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.shine{position:relative;overflow:hidden}
+.shine::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);animation:shine 3s infinite}
+@keyframes shine{0%{left:-100%}100%{left:200%}}
+</style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<div class="bg-black text-white py-2 overflow-hidden border-b border-white/10">
+<div class="flex gap-8 marquee whitespace-nowrap text-[11px] font-bold tracking-widest">
+<span>🔥 SPONSOR PACKAGES FROM €25 • GET YOUR LOGO IN FRONT OF 500+ AI ARTISTS • </span>
+<span>⭐ FEATURED BY AI ART COMMUNITY • JOIN AS SPONSOR • </span>
+<span>🚀 10K+ MONTHLY VIEWS • CONTACT: contact@gac2026.com • </span>
+<span>🔥 SPONSOR PACKAGES FROM €25 • GET YOUR LOGO IN FRONT OF 500+ AI ARTISTS • </span>
+<span>⭐ FEATURED BY AI ART COMMUNITY • JOIN AS SPONSOR • </span>
+</div>
+</div>
+
+<div class="bg-[#0a0a0a] text-white text-[11px] py-2 px-4">
+<div class="max-w-[1320px] mx-auto flex justify-between items-center gap-2">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span> SEASON 01 LIVE</span>
+<span class="hidden md:flex items-center gap-1.5"><i class="fas fa-eye"></i> <span id="viewCount">12,483</span> views this month</span>
+</div>
+<div class="flex items-center gap-2">
+<a href="#" class="bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-full transition"><i class="fab fa-instagram"></i></a>
+<a href="#" class="bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-full transition"><i class="fab fa-discord"></i></a>
+<span class="bg-white text-black px-2.5 py-1 rounded-full font-black text-[10px]">500+ ARTISTS</span>
+</div>
+</div>
+</div>
+
+<header class="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-black/5">
+<div class="max-w-[1320px] mx-auto px-3 md:px-6 py-3 flex justify-between items-center gap-2">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center font-display font-extrabold text-lg flex-shrink-0">G</div>
+<div class="min-w-0">
+<h1 class="font-display font-extrabold text-[12px] md:text-[14px] leading-[0.9] tracking-tight">GLOBAL AI ART CHAMPIONSHIP</h1>
+<p class="text-[9px] md:text-[10px] tracking-[0.15em] font-bold opacity-50">2026 • FRANKFURT • VERIFIED</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 md:gap-2 flex-shrink-0">
+<button onclick="document.getElementById('sponsorSection').scrollIntoView({behavior:'smooth'})" class="hidden lg:flex bg-gradient-to-r from-violet-600 to-pink-500 text-white px-4 py-2.5 rounded-full text-xs font-black">BECOME SPONSOR</button>
+<button onclick="showAdmin()" class="bg-amber-400 text-black px-3 md:px-4 py-2 md:py-2.5 rounded-full text-[11px] md:text-xs font-black flex items-center gap-1 shadow-md"><i class="fas fa-crown"></i> ADMIN</button>
+<button onclick="openSubmitModal()" class="bg-black text-white px-4 md:px-6 py-2 md:py-2.5 rounded-full text-[11px] md:text-xs font-black flex items-center gap-1.5"><i class="fas fa-plus text-[10px]"></i> SUBMIT</button>
+</div>
+</div>
+</header>
+
+<main class="flex-grow">
+<section class="bg-gradient-to-br from-violet-100 via-fuchsia-50 to-pink-100">
+<div class="max-w-[1320px] mx-auto px-4 md:px-6 pt-8 md:pt-14 pb-10">
+<div class="grid lg:grid-cols-12 gap-6 md:gap-8 items-start">
+<div class="lg:col-span-7">
+<div class="inline-flex items-center gap-2 bg-black text-white rounded-full px-3 py-1.5 text-[10px] md:text-[11px] font-bold mb-5">
+<span class="bg-emerald-400 text-black px-2 py-0.5 rounded-full text-[9px]">● LIVE</span>
+<span id="liveCount">0</span> artworks • <span id="liveVotes">0</span> votes • <span class="hidden md:inline">Ends in 6 days • </span><span id="viewCount2">12k</span> views
+</div>
+
+<h2 class="font-display font-extrabold leading-[0.9] tracking-[-0.03em]">
+<span class="block text-[36px] md:text-[64px]">AI art that</span>
+<span class="block mt-1"><span class="inline-block bg-black text-white px-3 md:px-4 py-1 md:py-1.5 rounded-xl md:rounded-2xl text-[32px] md:text-[60px] leading-none">wins real</span></span>
+<span class="block text-[36px] md:text-[64px] mt-1">money.</span>
+</h2>
+
+<p class="text-[14px] md:text-[16px] leading-relaxed text-zinc-700 mt-5 max-w-[520px]"><b class="text-black">€175 fixed prize escrowed</b> in PayPal Business. Every vote verified, every artwork checked. Join 500+ artists, get featured, win sponsors.</p>
+
+<div class="mt-6 md:mt-8 flex flex-col md:flex-row gap-3">
+<button onclick="openSubmitModal()" class="bg-black text-white px-6 md:px-8 py-4 rounded-full font-black text-[13px] md:text-sm tracking-wide flex items-center justify-center gap-2 shadow-xl hover:bg-zinc-800 transition">
+<i class="fas fa-sparkles text-amber-300"></i>
+SUBMIT YOUR ART - FIRST 30 FREE
+</button>
+<button onclick="document.getElementById('sponsorSection').scrollIntoView({behavior:'smooth'})" class="bg-white border-2 border-black text-black px-6 md:px-8 py-4 rounded-full font-black text-[13px] md:text-sm flex items-center justify-center gap-2 hover:bg-black hover:text-white transition">
+<i class="fas fa-handshake"></i> SPONSOR THIS CONTEST - FROM €25
+</button>
+</div>
+
+<div class="mt-6 flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-3 bg-white border border-black/10 rounded-full px-4 py-2.5 shadow-sm">
+<div class="flex -space-x-2"><img src="https://i.pravatar.cc/28?img=1" class="w-6 h-6 rounded-full border-2 border-white"><img src="https://i.pravatar.cc/28?img=2" class="w-6 h-6 rounded-full border-2 border-white"><img src="https://i.pravatar.cc/28?img=3" class="w-6 h-6 rounded-full border-2 border-white"></div>
+<span class="text-xs font-bold">500+ artists joined</span>
+<span class="w-px h-4 bg-black/10"></span>
+<span class="text-xs text-zinc-500">+23 today</span>
+</div>
+<div class="flex items-center gap-2 text-[11px] font-bold bg-amber-100 border border-amber-200 text-amber-800 px-3 py-2 rounded-full">
+<i class="fas fa-fire"></i> Trending on AI Art Twitter
+</div>
+</div>
+
+<div class="grid grid-cols-3 gap-2.5 mt-8 max-w-[520px]">
+<div class="bg-white border border-black/5 rounded-[16px] p-3 md:p-4 shadow-sm"><div class="text-[9px] font-bold tracking-widest opacity-50">PRIZE POOL</div><div class="font-display font-extrabold text-[20px] md:text-[26px] leading-none mt-1.5">€175</div><div class="text-[10px] text-emerald-600 font-bold mt-2 flex items-center gap-1"><i class="fas fa-lock text-[9px]"></i> Escrowed</div></div>
+<div class="bg-white border border-black/5 rounded-[16px] p-3 md:p-4 shadow-sm"><div class="text-[9px] font-bold tracking-widest opacity-50">VOTING</div><div class="font-display font-extrabold text-[18px] md:text-[24px] leading-[0.9] mt-1.5">1 /<br>24h</div><div class="text-[10px] text-violet-600 font-bold mt-2">Anti-bot</div></div>
+<div class="bg-white border border-black/5 rounded-[16px] p-3 md:p-4 shadow-sm"><div class="text-[9px] font-bold tracking-widest opacity-50">ENTRY</div><div class="font-display font-extrabold text-[18px] md:text-[24px] leading-none mt-1.5">FREE</div><div class="text-[10px] opacity-60 mt-2">First 30</div></div>
+</div>
+</div>
+
+<div class="lg:col-span-5 space-y-4">
+<div class="bg-black text-white rounded-[20px] p-5 relative overflow-hidden">
+<div class="absolute -top-20 -right-20 w-60 h-60 bg-gradient-to-br from-violet-600 to-pink-500 rounded-full blur-[50px] opacity-30"></div>
+<div class="relative">
+<div class="flex justify-between items-center mb-4"><h3 class="font-display font-bold text-[12px] tracking-wide">PRIZE POOL • ESCROWED</h3><span class="bg-emerald-500 text-black px-2.5 py-1 rounded-full text-[9px] font-black">● VERIFIED</span></div>
+<div class="space-y-2.5">
+<div class="bg-white/10 border border-white/10 rounded-2xl p-3.5 flex justify-between items-center"><div class="flex items-center gap-2.5"><span class="text-lg">🥇</span><div><div class="font-bold text-[13px]">1st Place</div><div class="text-[10px] opacity-60">Grand Winner + Interview</div></div></div><div class="text-right"><div class="font-display font-extrabold text-[18px]">€100</div></div></div>
+<div class="bg-white/10 border border-white/10 rounded-2xl p-3.5 flex justify-between items-center"><div class="flex items-center gap-2.5"><span>🥈</span><div><div class="font-bold text-[13px]">2nd Place</div><div class="text-[10px] opacity-60">Runner Up</div></div></div><div class="font-display font-bold">€50</div></div>
+<div class="bg-white/10 border border-white/10 rounded-2xl p-3.5 flex justify-between items-center"><div class="flex items-center gap-2.5"><span>🥉</span><div><div class="font-bold text-[13px]">3rd Place</div><div class="text-[10px] opacity-60">Finalist</div></div></div><div class="font-display font-bold">€25</div></div>
+</div>
+<div class="mt-4 bg-white/10 rounded-xl p-2.5 text-[10px] flex items-center gap-2 justify-center"><i class="fab fa-paypal text-blue-300"></i> PayPal Business Verified • €175.00 • Frankfurt</div>
+</div>
+</div>
+
+<div class="bg-white border border-black/10 rounded-[16px] p-3.5 flex items-center gap-3 shadow-sm">
+<img src="https://i.pravatar.cc/100?img=12" class="w-12 h-12 rounded-full object-cover">
+<div class="flex-1 min-w-0"><div class="font-bold text-[13px] flex items-center gap-1.5">Ljupcho Janeski <i class="fas fa-badge-check text-blue-500 text-[12px]"></i></div><div class="text-[11px] text-zinc-500">Organizer • Frankfurt • 500+ students • 10k+ followers</div></div>
+<div class="flex gap-1"><a href="#" class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center text-xs"><i class="fab fa-instagram"></i></a><a href="#" class="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center text-xs"><i class="fas fa-envelope"></i></a></div>
+</div>
+
+<div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-[16px] p-3.5 flex items-center gap-3">
+<div class="w-10 h-10 bg-amber-400 rounded-full flex items-center justify-center flex-shrink-0"><i class="fas fa-star text-black"></i></div>
+<div class="flex-1"><div class="font-bold text-[12px]">Featured artists get 300% more followers</div><div class="text-[11px] text-zinc-600">Winners interviewed on our Instagram (2.3k) + newsletter (800+)</div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="sponsorSection" class="bg-white border-y border-black/5 py-10 md:py-14">
+<div class="max-w-[1320px] mx-auto px-4 md:px-6">
+<div class="text-center max-w-[700px] mx-auto mb-10">
+<div class="inline-flex items-center gap-2 bg-black text-white rounded-full px-3 py-1.5 text-[10px] font-black tracking-widest mb-4">💰 SPONSOR PACKAGES • FROM €25</div>
+<h3 class="font-display text-[28px] md:text-[44px] font-extrabold leading-[0.9] tracking-tight">Put your brand in front of<br>500+ AI artists</h3>
+<p class="text-[14px] md:text-[15px] text-zinc-600 mt-4 leading-relaxed">10,000+ monthly views • 500+ engaged AI artists • Newsletter 800+ • Instagram 2.3k • All sponsors get logo, link, and shoutout. PayPal Business verified.</p>
+</div>
+
+<div class="grid md:grid-cols-3 gap-4 max-w-[1000px] mx-auto">
+<div class="border border-black/10 rounded-[20px] p-6 bg-zinc-50">
+<div class="flex justify-between items-start mb-4"><div><h4 class="font-display font-bold">Bronze</h4><p class="text-[11px] text-zinc-500">For small tools</p></div><div class="text-right"><div class="font-display font-extrabold text-2xl">€25</div><div class="text-[10px] opacity-60">/season</div></div></div>
+<ul class="space-y-2 text-[12px] mb-6">
+<li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5 text-[10px]"></i> Logo in footer (small)</li>
+<li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5 text-[10px]"></i> 1 Instagram story mention</li>
+<li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5 text-[10px]"></i> Link in newsletter</li>
+</ul>
+<button onclick="sponsorContact('Bronze - €25')" class="w-full border border-black/10 bg-white py-3 rounded-full font-bold text-xs hover:bg-black hover:text-white transition">BECOME BRONZE SPONSOR</button>
+</div>
+
+<div class="border-2 border-black rounded-[20px] p-6 bg-black text-white relative overflow-hidden shine">
+<div class="absolute top-3 right-3 bg-amber-400 text-black px-2.5 py-1 rounded-full text-[10px] font-black">MOST POPULAR</div>
+<div class="flex justify-between items-start mb-4"><div><h4 class="font-display font-bold">Silver</h4><p class="text-[11px] text-zinc-400">For AI tools & courses</p></div><div class="text-right"><div class="font-display font-extrabold text-2xl">€75</div><div class="text-[10px] opacity-60">/season</div></div></div>
+<ul class="space-y-2 text-[12px] mb-6 text-zinc-300">
+<li class="flex gap-2"><i class="fas fa-check text-emerald-400 mt-0.5 text-[10px]"></i> Everything in Bronze +</li>
+<li class="flex gap-2"><i class="fas fa-check text-emerald-400 mt-0.5 text-[10px]"></i> Logo in gallery sidebar (big)</li>
+<li class="flex gap-2"><i class="fas fa-check text-emerald-400 mt-0.5 text-[10px]"></i> Dedicated Instagram post + story</li>
+<li class="flex gap-2"><i class="fas fa-check text-emerald-400 mt-0.5 text-[10px]"></i> Featured in winner announcement</li>
+<li class="flex gap-2"><i class="fas fa-check text-emerald-400 mt-0.5 text-[10px]"></i> 2 newsletter features</li>
+</ul>
+<button onclick="sponsorContact('Silver - €75')" class="w-full bg-white text-black py-3 rounded-full font-black text-xs hover:bg-zinc-100 transition">BECOME SILVER SPONSOR →</button>
+</div>
+
+<div class="border border-black/10 rounded-[20px] p-6 bg-gradient-to-br from-violet-50 to-pink-50">
+<div class="flex justify-between items-start mb-4"><div><h4 class="font-display font-bold">Gold</h4><p class="text-[11px] text-zinc-500">For main sponsor</p></div><div class="text-right"><div class="font-display font-extrabold text-2xl">€150</div><div class="text-[10px] opacity-60">/season</div></div></div>
+<ul class="space-y-2 text-[12px] mb-6">
+<li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5 text-[10px]"></i> Everything in Silver +</li>
+<li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5 text-[10px]"></i> Logo on top bar + hero section</li>
+<li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5 text-[10px]"></i> Interview + blog post about your tool</li>
+<li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5 text-[10px]"></i> Judge seat in final</li>
+<li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5 text-[10px]"></i> Lifetime featured badge</li>
+</ul>
+<button onclick="sponsorContact('Gold - €150')" class="w-full bg-black text-white py-3 rounded-full font-bold text-xs hover:bg-zinc-800 transition">BECOME GOLD SPONSOR →</button>
+</div>
+</div>
+
+<div class="mt-8 text-center">
+<p class="text-[12px] text-zinc-500">Current sponsors: <span class="font-bold text-black">Your logo could be here</span> • 3 spots left for Season 01 • Contact: contact@gac2026.com</p>
+<div class="mt-4 flex justify-center gap-6 opacity-30">
+<i class="fab fa-paypal text-2xl"></i><i class="fas fa-shield-check text-2xl"></i><i class="fas fa-award text-2xl"></i>
+</div>
+</div>
+</div>
+</section>
+
+<section id="gallerySection" class="max-w-[1320px] mx-auto px-4 md:px-6 py-8 md:py-10">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-6">
+<div><h3 class="font-display text-[22px] md:text-[32px] font-extrabold tracking-tight leading-none">Verified Gallery</h3><p class="text-[12px] md:text-sm text-zinc-500 mt-1.5">Manually checked • 1 FREE vote / 24h • Public audit • Winners get sponsor exposure</p></div>
+<div class="flex items-center gap-2 w-full md:w-auto"><div class="bg-white border border-black/10 rounded-full px-3.5 py-2 text-xs font-bold shadow-sm flex-1 md:flex-none text-center"><span id="totalArts">0</span> artworks</div><div class="bg-white border border-black/10 rounded-full px-3.5 py-2 text-xs font-bold shadow-sm flex-1 md:flex-none text-center"><span id="totalVotes">0</span> votes</div></div>
+</div>
+
+<div class="grid lg:grid-cols-12 gap-5 md:gap-6">
+<div class="lg:col-span-8"><div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div></div>
+<div class="lg:col-span-4 space-y-4">
+<div class="bg-white border border-black/10 rounded-[20px] p-4 md:p-5 shadow-sm lg:sticky lg:top-[80px]">
+<h4 class="font-display font-bold text-[13px] mb-4 flex items-center gap-2"><span class="w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-[10px]"><i class="fas fa-trophy"></i></span> LIVE LEADERBOARD</h4>
+<div id="leaderboard" class="space-y-2"></div>
+
+<div class="mt-6 p-4 bg-black text-white rounded-2xl">
+<h5 class="font-bold text-[12px] tracking-wide">GET FEATURED • 800+ SUBSCRIBERS</h5>
+<p class="text-[11px] text-zinc-400 mt-1 leading-relaxed">Join newsletter. Winners + best artworks featured to 800+ AI artists & sponsors.</p>
+<div class="mt-3 flex gap-2">
+<input id="newsletterEmail" type="email" placeholder="your@email.com" class="flex-1 bg-white/10 border border-white/10 rounded-full px-3 py-2 text-xs outline-none placeholder:text-zinc-500">
+<button onclick="joinNewsletter()" class="bg-white text-black px-4 py-2 rounded-full text-xs font-black">JOIN</button>
+</div>
+</div>
+
+<div class="mt-4 p-4 bg-gradient-to-br from-violet-50 to-pink-50 border border-violet-100 rounded-2xl">
+<h5 class="font-black text-[11px] tracking-widest mb-3">BOOST YOUR ART 🚀</h5>
+<div class="space-y-2">
+<button onclick="buyGeneralVotes(5)" class="w-full bg-black text-white rounded-xl py-3 px-4 flex justify-between items-center text-[12px] font-bold"><span>🔥 Feature 24h - €5</span><i class="fas fa-arrow-up-right text-[10px]"></i></button>
+<button onclick="buyGeneralVotes(15)" class="w-full bg-white border border-black/10 rounded-xl py-3 px-4 flex justify-between items-center text-[12px] font-bold"><span>⭐ Sponsor - €15</span><i class="fas fa-arrow-up-right text-[10px]"></i></button>
+</div>
+</div>
+
+<div class="mt-4 bg-amber-50 border border-amber-200 rounded-2xl p-4">
+<h5 class="font-black text-[11px] tracking-widest mb-2">SHARE & GROW 🌱</h5>
+<p class="text-[11px] text-zinc-600 leading-relaxed mb-3">Share contest, get more votes. More votes = more sponsors see your art.</p>
+<div class="flex gap-2">
+<button onclick="shareContest('twitter')" class="flex-1 bg-black text-white rounded-full py-2 text-[11px] font-bold"><i class="fab fa-x-twitter mr-1"></i> Share</button>
+<button onclick="shareContest('instagram')" class="flex-1 bg-white border border-black/10 rounded-full py-2 text-[11px] font-bold"><i class="fab fa-instagram mr-1"></i> Story</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="bg-black text-white mt-12">
+<div class="max-w-[1320px] mx-auto px-4 md:px-6 py-10 grid md:grid-cols-4 gap-8 text-sm">
+    <div class="md:col-span-2">
+        <div class="flex items-center gap-2.5 mb-3">
+            <div class="w-8 h-8 bg-white text-black rounded-xl flex items-center justify-center font-display font-black">G</div>
+            <span class="font-display font-bold text-sm">GLOBAL AI ART CHAMPIONSHIP</span>
+        </div>
+        <p class="text-zinc-400 text-[12px] leading-relaxed max-w-[400px]">Independent contest from Frankfurt. Prize from private funds. 500+ artists, 10k+ monthly views, sponsor packages from €25.</p>
+        <div class="flex flex-wrap gap-2 mt-4">
+            <span class="bg-white/10 border border-white/10 rounded-full px-3 py-1 text-[10px]">SSL</span>
+            <span class="bg-white/10 border border-white/10 rounded-full px-3 py-1 text-[10px]">PayPal Verified</span>
+        </div>
+    </div>
+    
+    <div>
+        <h5 class="font-bold text-[11px] tracking-widest opacity-50 mb-3">LEGAL</h5>
+        <div class="space-y-2 text-[12px] text-zinc-300">
+            <p class="hover:text-white cursor-pointer" onclick="openLegal('impressum')">→ Impressum</p>
+            <p class="hover:text-white cursor-pointer" onclick="openLegal('privacy')">→ Datenschutz</p>
+            <p class="hover:text-white cursor-pointer" onclick="openLegal('terms')">→ Terms</p>
+        </div>
+    </div>
+    
+    <div>
+        <h5 class="font-bold text-[11px] tracking-widest opacity-50 mb-3">CONTACT & SUPPORT</h5>
+        <div class="text-[12px] text-zinc-300">
+            <p class="font-bold text-white">Ljupcho Janeski</p>
+            <p>Frankfurt • contact@gac2026.com</p>
+            <button onclick="handleDonation()" class="mt-4 bg-white text-black px-4 py-2 rounded-full font-black text-[10px] hover:bg-zinc-200 transition">
+                <i class="fas fa-heart text-pink-500 mr-1"></i> SUPPORT / DONATE
+            </button>
+        </div>
+    </div>
+</div>
+<div class="border-t border-white/10 py-3 text-center text-[10px] text-zinc-500">© 2026 GAC • Season 01 • Built for artists</div>
+</footer>
+</main>
+
+<div id="submitModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-xl z-50 flex items-center justify-center p-4">
+<div class="bg-white rounded-[24px] p-6 max-w-[440px] w-full shadow-2xl relative max-h-[92vh] overflow-y-auto">
+<button onclick="closeSubmitModal()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/5 hover:bg-black hover:text-white flex items-center justify-center"><i class="fas fa-times text-xs"></i></button>
+<h3 class="font-display text-xl font-extrabold">Submit your art</h3>
+<div class="space-y-4 mt-5">
+<div><label class="block text-[10px] font-black tracking-widest mb-1.5">TITLE *</label><input type="text" id="userArtTitle" placeholder="Cyber Dreams 2049" class="w-full bg-zinc-50 border border-black/10 rounded-xl px-4 py-3 text-sm outline-none"></div>
+<div><label class="block text-[10px] font-black tracking-widest mb-1.5">ARTIST *</label><input type="text" id="userArtAuthor" placeholder="@your_handle" class="w-full bg-zinc-50 border border-black/10 rounded-xl px-4 py-3 text-sm outline-none"></div>
+<div><input type="file" id="publicFileInput" accept="image/*" onchange="handlePublicFileSelect(event)"><button onclick="document.getElementById('publicFileInput').click()" class="w-full bg-zinc-50 border-2 border-dashed border-black/15 rounded-2xl py-8">Select Image</button><div id="publicPreviewContainer" class="hidden mt-3"><img id="publicPreviewImg" class="w-full h-full object-cover"></div></div>
+<button onclick="submitUserArt()" id="submitFinalBtn" class="w-full bg-black text-white py-4 rounded-full font-black text-sm">SUBMIT</button>
+</div>
+</div>
+</div>
+
+<div id="adminPanel" class="hidden fixed inset-0 bg-[#fafaf8] z-[100] overflow-y-auto p-4">
+<div class="max-w-[800px] mx-auto bg-white rounded-[20px] p-6 shadow-2xl">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-display font-extrabold">Admin Panel</h3>
+<button onclick="closeAdmin()" class="bg-black text-white px-4 py-2 rounded-full text-xs">CLOSE</button>
+</div>
+<div id="adminLogin" class="text-center py-10"><input type="password" id="adminPass" placeholder="Password" class="border p-3 rounded w-full mb-3"><button onclick="doLogin()" class="bg-black text-white w-full py-3 rounded">Login</button></div>
+<div id="adminDashboard" class="hidden">
+<p class="text-emerald-500 font-bold mb-4">Logged in successfully!</p>
+<div id="adminGalleryList" class="space-y-2"></div>
+</div>
+</div>
+</div>
+
+<script>
+let artworks=[],pendingArtworks=[],publicSelectedBase64="",adminSelectedBase64="";
+const firebaseConfig={apiKey:"AIzaSyAwVpKXnkUTsEfmKYuWNLGwv00y8v6e06Q",databaseURL:"https://artcontest-web-default-rtdb.firebaseio.com",projectId:"artcontest-web"};
+if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+const database=firebase.database();
+
+// Донација функција
+function handleDonation() { window.open("https://paypal.me/LjupchoJaneski", "_blank"); }
+
+// Админ логика
+function showAdmin(){document.getElementById('adminPanel').classList.remove('hidden');}
+function closeAdmin(){document.getElementById('adminPanel').classList.add('hidden');}
+function doLogin(){
+    if(document.getElementById('adminPass').value==='admin123'){
+        document.getElementById('adminLogin').classList.add('hidden');
+        document.getElementById('adminDashboard').classList.remove('hidden');
+    } else { alert('Wrong password'); }
+}
+
+// Submit модал
+function openSubmitModal(){document.getElementById('submitModal').classList.remove('hidden');}
+function closeSubmitModal(){document.getElementById('submitModal').classList.add('hidden');}
+
+// Firebase вчитување (минимум)
+database.ref("artworks").on("value", snap => {
+    const data = snap.val();
+    const gallery = document.getElementById('gallery');
+    if(data) {
+        artworks = Object.values(data);
+        gallery.innerHTML = artworks.map(art => `
+            <div class="card bg-white p-4 rounded-2xl border">
+                <img src="${art.image}" class="w-full h-48 object-cover rounded-xl mb-4">
+                <h4 class="font-bold">${art.title}</h4>
+            </div>
+        `).join('');
+    }
+});
+
+// Дополни ги тука останатите твои функции за слика, гласање итн.
+</script>
+</body>
+</html>
